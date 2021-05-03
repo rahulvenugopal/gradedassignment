@@ -1,2 +1,4 @@
-# gradedassignment
-Coursera course on Building R Packages
+# Coursera - Building an R Package 📦
+Final project submission for Building an R package course
+
+---
