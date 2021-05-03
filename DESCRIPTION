@@ -5,6 +5,7 @@ Version: 0.1.0
 Author: Rahul Venugopal
 Maintainer: The package maintainer <rhlvenugopal@gmail.com>
 Description: Summary and accident count plot on US state maps
+            Two lines should be there.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
