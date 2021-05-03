@@ -18,9 +18,6 @@ gradedassignments - Learning how to create an R package 📦
 Building R Package - Coursera course
 ====================================
 
-Building R Package - Coursera course
-====================================
-
 Packages are the fundamental units of reproducible R code ~ Hadley Wickham
 
 `Fatality Analysis Reporting System (FARS) <https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars>`_ datasets are made available with the package and two main functions to generate a summary report containing counts of fatality and to plot the same on a state map of US
