@@ -1,0 +1,79 @@
+---
+title: "farsdata-tutorial"
+author: "Rahul Venugopal"
+date: "4th of May, 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{farsdata-tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gradedassignment)
+```
+This package is a submission towards final assessment of `Building an R package` course.
+This has two functions to obtain a summary and a visual map of count of fatal injuries in motor vehicle traffic crashes from 2013,2014, and 2015.
+
+### Data
+Three data files were provided by the course instructors. These are from the National Highway Traffic Safety Administration (NHTSA) Fatality Analysis Reporting System (FARS) data.
+
+You may download the full data set from this [link](https://www.nhtsa.gov/nhtsa-ftp?fid=66#block-nhtsa-page-title)
+
+
+```{r 2015_data}
+filename <- make_filename('2015')
+data_2015 <- fars_read(filename) 
+knitr::kable(head(data_2015))
+
+```
+
+### Functions in the package
+
+**1. `make_filename` function will fetch the filename**
+```{r make_filename}
+filename <- make_filename(2015)
+filename
+```
+
+**2. `fars_read` function uses 'make_filename' and loads data**
+```{r fars_read}
+data <- fars_read(make_filename(2015) )
+knitr::kable(head(data))
+```
+
+**3. `fars_read_years` function subsets data based on year**
+```{r fars_read_years}
+data <- fars_read_years(2015)
+data
+```
+
+**4. `fars_summarize_years` generates a count summary of fatality numbers per month for years specified as output**
+```{r fars_summarize_years}
+summary <- fars_summarize_years(2013:2015)
+summary
+```
+
+```{r fars_summarize_years single}
+summary <- fars_summarize_years(2013)
+summary
+```
+
+**5. `fars_map_state` function plots a map with dots representing location of each crime committed**
+This function expects state ID number as first argument and year as second argument
+```{r fars_map_state}
+fars_map_state(49,2015)
+```
+
+```{r fars_map_state another}
+fars_map_state(4,2014)
+```
+
+

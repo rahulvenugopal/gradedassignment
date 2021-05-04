@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Rahul Venugopal" />
+
+
+<title>farsdata-tutorial</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">farsdata-tutorial</h1>
+<h4 class="author">Rahul Venugopal</h4>
+<h4 class="date">4th of May, 2021</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(gradedassignment)</span></code></pre></div>
+<p>This package is a submission towards final assessment of <code>Building an R package</code> course. This has two functions to obtain a summary and a visual map of count of fatal injuries in motor vehicle traffic crashes from 2013,2014, and 2015.</p>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>Three data files were provided by the course instructors. These are from the National Highway Traffic Safety Administration (NHTSA) Fatality Analysis Reporting System (FARS) data.</p>
+<p>You may download the full data set from this <a href="https://www.nhtsa.gov/nhtsa-ftp?fid=66#block-nhtsa-page-title">link</a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>filename &lt;-<span class="st"> </span><span class="kw">make_filename</span>(<span class="st">&#39;2015&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>data_<span class="dv">2015</span> &lt;-<span class="st"> </span><span class="kw">fars_read</span>(filename) </span>
+<span id="cb2-3"><a href="#cb2-3"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(data_<span class="dv">2015</span>))</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="4%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="0%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">STATE</th>
+<th align="right">ST_CASE</th>
+<th align="right">VE_TOTAL</th>
+<th align="right">VE_FORMS</th>
+<th align="right">PVH_INVL</th>
+<th align="right">PEDS</th>
+<th align="right">PERNOTMVIT</th>
+<th align="right">PERMVIT</th>
+<th align="right">PERSONS</th>
+<th align="right">COUNTY</th>
+<th align="right">CITY</th>
+<th align="right">DAY</th>
+<th align="right">MONTH</th>
+<th align="right">YEAR</th>
+<th align="right">DAY_WEEK</th>
+<th align="right">HOUR</th>
+<th align="right">MINUTE</th>
+<th align="right">NHS</th>
+<th align="right">RUR_URB</th>
+<th align="right">FUNC_SYS</th>
+<th align="right">RD_OWNER</th>
+<th align="right">ROUTE</th>
+<th align="left">TWAY_ID</th>
+<th align="left">TWAY_ID2</th>
+<th align="right">MILEPT</th>
+<th align="right">LATITUDE</th>
+<th align="right">LONGITUD</th>
+<th align="right">SP_JUR</th>
+<th align="right">HARM_EV</th>
+<th align="right">MAN_COLL</th>
+<th align="right">RELJCT1</th>
+<th align="right">RELJCT2</th>
+<th align="right">TYP_INT</th>
+<th align="right">WRK_ZONE</th>
+<th align="right">REL_ROAD</th>
+<th align="right">LGT_COND</th>
+<th align="right">WEATHER1</th>
+<th align="right">WEATHER2</th>
+<th align="right">WEATHER</th>
+<th align="right">SCH_BUS</th>
+<th align="left">RAIL</th>
+<th align="right">NOT_HOUR</th>
+<th align="right">NOT_MIN</th>
+<th align="right">ARR_HOUR</th>
+<th align="right">ARR_MIN</th>
+<th align="right">HOSP_HR</th>
+<th align="right">HOSP_MN</th>
+<th align="right">CF1</th>
+<th align="right">CF2</th>
+<th align="right">CF3</th>
+<th align="right">FATALS</th>
+<th align="right">DRUNK_DR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10001</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">127</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">SR-5</td>
+<td align="left">NA</td>
+<td align="right">1754</td>
+<td align="right">33.87865</td>
+<td align="right">-87.32533</td>
+<td align="right">0</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">2</td>
+<td align="right">58</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10002</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">83</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">22</td>
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">I-65</td>
+<td align="left">NA</td>
+<td align="right">3604</td>
+<td align="right">34.91044</td>
+<td align="right">-86.90871</td>
+<td align="right">0</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">22</td>
+<td align="right">20</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10003</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">US-SR 6</td>
+<td align="left">NA</td>
+<td align="right">1958</td>
+<td align="right">32.14201</td>
+<td align="right">-85.75846</td>
+<td align="right">0</td>
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">1</td>
+<td align="right">45</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10004</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">57</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">SR-27</td>
+<td align="left">NA</td>
+<td align="right">566</td>
+<td align="right">31.43981</td>
+<td align="right">-85.51030</td>
+<td align="right">0</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10005</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">45</td>
+<td align="right">2050</td>
+<td align="right">7</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">US-SR 53</td>
+<td align="left">HINTON WATERS AVE</td>
+<td align="right">308</td>
+<td align="right">31.31933</td>
+<td align="right">-85.51510</td>
+<td align="right">0</td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">7</td>
+<td align="right">16</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10006</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">111</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">9</td>
+<td align="right">59</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="left">CR-82</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">33.43849</td>
+<td align="right">-85.38927</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">10</td>
+<td align="right">17</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="functions-in-the-package" class="section level3">
+<h3>Functions in the package</h3>
+<p><strong>1. <code>make_filename</code> function will fetch the filename</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>filename &lt;-<span class="st"> </span><span class="kw">make_filename</span>(<span class="dv">2015</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>filename</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; [1] &quot;accident_2015.csv.bz2&quot;</span></span></code></pre></div>
+<p><strong>2. <code>fars_read</code> function uses ‘make_filename’ and loads data</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data &lt;-<span class="st"> </span><span class="kw">fars_read</span>(<span class="kw">make_filename</span>(<span class="dv">2015</span>) )</span>
+<span id="cb4-2"><a href="#cb4-2"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(data))</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="4%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="0%"></col>
+<col width="0%"></col>
+<col width="0%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">STATE</th>
+<th align="right">ST_CASE</th>
+<th align="right">VE_TOTAL</th>
+<th align="right">VE_FORMS</th>
+<th align="right">PVH_INVL</th>
+<th align="right">PEDS</th>
+<th align="right">PERNOTMVIT</th>
+<th align="right">PERMVIT</th>
+<th align="right">PERSONS</th>
+<th align="right">COUNTY</th>
+<th align="right">CITY</th>
+<th align="right">DAY</th>
+<th align="right">MONTH</th>
+<th align="right">YEAR</th>
+<th align="right">DAY_WEEK</th>
+<th align="right">HOUR</th>
+<th align="right">MINUTE</th>
+<th align="right">NHS</th>
+<th align="right">RUR_URB</th>
+<th align="right">FUNC_SYS</th>
+<th align="right">RD_OWNER</th>
+<th align="right">ROUTE</th>
+<th align="left">TWAY_ID</th>
+<th align="left">TWAY_ID2</th>
+<th align="right">MILEPT</th>
+<th align="right">LATITUDE</th>
+<th align="right">LONGITUD</th>
+<th align="right">SP_JUR</th>
+<th align="right">HARM_EV</th>
+<th align="right">MAN_COLL</th>
+<th align="right">RELJCT1</th>
+<th align="right">RELJCT2</th>
+<th align="right">TYP_INT</th>
+<th align="right">WRK_ZONE</th>
+<th align="right">REL_ROAD</th>
+<th align="right">LGT_COND</th>
+<th align="right">WEATHER1</th>
+<th align="right">WEATHER2</th>
+<th align="right">WEATHER</th>
+<th align="right">SCH_BUS</th>
+<th align="left">RAIL</th>
+<th align="right">NOT_HOUR</th>
+<th align="right">NOT_MIN</th>
+<th align="right">ARR_HOUR</th>
+<th align="right">ARR_MIN</th>
+<th align="right">HOSP_HR</th>
+<th align="right">HOSP_MN</th>
+<th align="right">CF1</th>
+<th align="right">CF2</th>
+<th align="right">CF3</th>
+<th align="right">FATALS</th>
+<th align="right">DRUNK_DR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10001</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">127</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">SR-5</td>
+<td align="left">NA</td>
+<td align="right">1754</td>
+<td align="right">33.87865</td>
+<td align="right">-87.32533</td>
+<td align="right">0</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">2</td>
+<td align="right">58</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10002</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">83</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">22</td>
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">I-65</td>
+<td align="left">NA</td>
+<td align="right">3604</td>
+<td align="right">34.91044</td>
+<td align="right">-86.90871</td>
+<td align="right">0</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">22</td>
+<td align="right">20</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10003</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">US-SR 6</td>
+<td align="left">NA</td>
+<td align="right">1958</td>
+<td align="right">32.14201</td>
+<td align="right">-85.75846</td>
+<td align="right">0</td>
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">1</td>
+<td align="right">45</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10004</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">57</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">SR-27</td>
+<td align="left">NA</td>
+<td align="right">566</td>
+<td align="right">31.43981</td>
+<td align="right">-85.51030</td>
+<td align="right">0</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10005</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">45</td>
+<td align="right">2050</td>
+<td align="right">7</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">US-SR 53</td>
+<td align="left">HINTON WATERS AVE</td>
+<td align="right">308</td>
+<td align="right">31.31933</td>
+<td align="right">-85.51510</td>
+<td align="right">0</td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">7</td>
+<td align="right">16</td>
+<td align="right">88</td>
+<td align="right">88</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10006</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">111</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">2015</td>
+<td align="right">5</td>
+<td align="right">9</td>
+<td align="right">59</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="left">CR-82</td>
+<td align="left">NA</td>
+<td align="right">0</td>
+<td align="right">33.43849</td>
+<td align="right">-85.38927</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">0000000</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">10</td>
+<td align="right">17</td>
+<td align="right">99</td>
+<td align="right">99</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. <code>fars_read_years</code> function subsets data based on year</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>data &lt;-<span class="st"> </span><span class="kw">fars_read_years</span>(<span class="dv">2015</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>data</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; # A tibble: 32,166 x 2</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;    MONTH  year</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  1     1  2015</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;  2     1  2015</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;  3     1  2015</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  4     1  2015</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  5     1  2015</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  6     1  2015</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  7     1  2015</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  8     1  2015</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  9     1  2015</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 10     1  2015</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; # ... with 32,156 more rows</span></span></code></pre></div>
+<p><strong>4. <code>fars_summarize_years</code> generates a count summary of fatality numbers per month for years specified as output</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>summary &lt;-<span class="st"> </span><span class="kw">fars_summarize_years</span>(<span class="dv">2013</span><span class="op">:</span><span class="dv">2015</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>summary</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; # A tibble: 12 x 4</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt;    MONTH `2013` `2014` `2015`</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;    &lt;dbl&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;  1     1   2230   2168   2368</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  2     2   1952   1893   1968</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;  3     3   2356   2245   2385</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt;  4     4   2300   2308   2430</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;  5     5   2532   2596   2847</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  6     6   2692   2583   2765</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;  7     7   2660   2696   2998</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt;  8     8   2899   2800   3016</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt;  9     9   2741   2618   2865</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; 10    10   2768   2831   3019</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 11    11   2615   2714   2724</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; 12    12   2457   2604   2781</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>summary &lt;-<span class="st"> </span><span class="kw">fars_summarize_years</span>(<span class="dv">2013</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>summary</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; # A tibble: 12 x 2</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;    MONTH `2013`</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;    &lt;dbl&gt;  &lt;int&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;  1     1   2230</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  2     2   1952</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  3     3   2356</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  4     4   2300</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt;  5     5   2532</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt;  6     6   2692</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;  7     7   2660</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;  8     8   2899</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt;  9     9   2741</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; 10    10   2768</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; 11    11   2615</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; 12    12   2457</span></span></code></pre></div>
+<p><strong>5. <code>fars_map_state</code> function plots a map with dots representing location of each crime committed</strong> This function expects state ID number as first argument and year as second argument</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">fars_map_state</span>(<span class="dv">49</span>,<span class="dv">2015</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAD/klEQVR4nO3d227iQBQF0eb/fzqCgLnYTRkEfXaLWi+TiUbjrYqDE2KRdtBTrXpAOgMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQMBAwEDAQOB5EAR2/JGtO13V4kY0RGxbciINw/yO4HePH71tpPqEQbao63e2PhbkYQRvQ0J25JGrKYEbQuwMSRiW8SIjohtESM6KyK2RYzozIjYFjHiyMegp9rWjohtESNutc0360SM8DGI+SlG2mE1JmJbygjPILB1GYvYFjHiYCDQjoFWTwZFbIsYcVj3Ob2zYMhKxIgbzS8UezyDwEagfUbPylK+r3zA4noq5Gw6JI3JWXIndNYeY6bnBAq7q+Pi22O6///j1ed0Odr6crHYuEGtd8DTpXrABfs9IaP+I53frp3yIGXNwxmUczZVD7mcN0uelO/iL8rHLGFCP8fqx3Ru7UiYdpSx4n5HyqaTnDGZn2FBa26fVMxZlTQl6eJ+VTlpfc+dgTouK3YVakMf0DMCLWhOG36aTRZovLxFXTVTYwK1hz9ThO1pad+rZq3xMj+hwEBZk2LWxD34nEWOSmIgYCCQFyhsUdicPAYC4YHq59UvWIu6j7N+wVP1352VD2C1E+MCpQ1K27OtcOUcgQoZCET94PBj//iD8s6gsEVhc/IYCEQEihjRkbwtwjyBipbOE6jI5IG+P3/yQN9XH+iVBQVr6wNdJW1ZVI9a38i561+NUx0oXmyglGEpO2KVBprhozPDxlIxzyimfqT8oROYYOK2UcOnDTSKgYCBgIGAgYCBQGKgqE1RYxLVPInZPnPoEeM9g0BJoE8d1DMogIGAgYCBgIGAgYCBgIHAj79iCJtoao0fv+OGzbW2gIGAgYCBwISBfuRV8FrlwV8weuMMTe5MN/iWT7kGMBAwEBgU6HyYT70Ux8APq2cQGBmoBbyYy8sG3guZ+kqJz3mzKBg2fNZC5bvLB4DCM6juV4O+4ttT3oyw81es+ntW6xkIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCPwB+sxCsYynuP4AAAAASUVORK5CYII=" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">fars_map_state</span>(<span class="dv">4</span>,<span class="dv">2014</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAFbklEQVR4nO2c23biOBAAxf//9J6dbBgDsss3dbfYqoecEGy1XKhlXUzaQzZp2RWojoIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAiIE9SJNMOnkyropiKHXkNdQUWaV11Bu4sZewnxgg5E7B0akVZUh9qRglOvtKB+C4o1VFpQBYoLamdPvI3igvL5wrvBvSgIUBCgIGAGQaunRlR+BkGp1BXUPn5Joa6gpDIzYsQGupnaglq+1sGrTX+4EOi7Bf1+/sNmnLP3Qc8EaedTJb0JTb0jMHsLyv/4b0BBwESCcnRPJOiz9On7oFGlR7alKQUtA8x9p8zflLjM5C1oPOUEFZifvlBOUDUCBM1tyRYEDL6E9+LnMxYjaC3KBL6CW9DIs8YQJ2jv/Xuj0WWICxLUDswJag2/i6ZY9KOa6wxdkz5dfAExvwxeDyp0pScZvS927rTnj3yi+6D1eEWEvFOyk44prUTMm4rfLGbu6eTO+/XBOVtgU5p7STeA4YJOzudb99cEAvYdRh4+nghBUzsaX5u9EWp5eVJO0I7Bd6jKgGB7QrRFJtZqSnmCXv78n6DWfTOVKR+QaKsv7qesoCpLJSG1OD447Lw+v/x2iZiYvVtTZ+m50wWlN6OgCuzcoyg4ZooKtS/OkVxM/GjnDTOAmE56R5Rau2F/iRgo7l6631+ZOJVlx0FQZJihInOx00dWW88aEKFix7MgXdDq20We5kxvoh/ziVtKvY90QWePjaLQtk97vDxGVGRtqIag5XJrsWZUKMXoC9I5vXaMIF6++De52pVv/44idl9s6/p//GxkWY67OinWFv+FoFBHlNdJfyywvhjaPjeQxD2Bt3x7Cirh5Un6psmfPufHy4uiKprG1uPIKGip6DXVUqdlQ0Pv3HT+O2Ze+lmMpDPTLl3QcouwdXrqg4XdToUUWx6/HCy+b1584Uj6xGbPj546I+oKgl7PaJG7XkyBPujoabHuKgoqxeAU21y/WDvh2EnpQ92L5e8K0F+YLtEA03c1OseWEPNLtqD2+bKUn0LrQYtTKimqKKgUCZ00bxXu7NhD1o5G3yRPjxWrtLyR9ejNyw8Mie6tzFkGC3pcWIWvYWiooEKZcprRLWh6Sk9WK/gdm2IViqhcg+sptllAiL3h46CLAVr2xCNgKHrtCrPbUEwz3XqoY/vM7mgzkqDYVy4y11Bc6PWrhEa0upUYQmRgvMzu9+7+R4Iex1Pt94mGQdXZVYPwiAdDdldhA3uGsEiLmMccffs4qB/2gKO3rY7gfEt88GY99Mo7X/h0B8Tev6uY+DmmRf4Jnz9dB9IrWH1VrULt3hxVqNJfitSmbjMqU7F9qZYwrg2PuM6Bu1oclQQ9uo6y77O54Tu8O+Kt/KHUE/R467KTH6oqKajS6KhKPT5Z+XJddIXrCno8HXUe0wusQ2i047RdjKzAwLK/AgUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBwD83c0GpUtcJKQAAAABJRU5ErkJggg==" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
