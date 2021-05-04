@@ -13,7 +13,7 @@ fars_summarize_years(years)
 A summary dataframe with counts of fatality per month for years specified
 }
 \description{
-Generates a count summary of fatality numbers per month for years specified as input
+Generates a count summary of fatality numbers per month for years specified as output
 }
 \note{
 Error can happen when the year mentioned is not available in dataset

@@ -77,7 +77,7 @@ fars_read_years <- function(years) {
 
 #' fars_summarize_years
 #'
-#' Generates a count summary of fatality numbers per month for years specified as input
+#' Generates a count summary of fatality numbers per month for years specified as output
 #'
 #' @param years A character vector of years for which we want count summary of fatality
 #'
