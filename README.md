@@ -13,7 +13,7 @@
 
 2. Does this package contain [a man/ directory](https://github.com/rahulvenugopal/gradedassignment/tree/main/man) with corresponding documentation files?
 
-3. Does this package contain a vignette which provides a meaningful description of the package and how it should be used?
+3. Does this package contain a [vignette](https://github.com/rahulvenugopal/gradedassignment/blob/main/vignettes/farsdata-tutorial.Rmd) which provides a meaningful description of the package and how it should be used? View html format [here](https://htmlpreview.github.io/?https://github.com/rahulvenugopal/gradedassignment/blob/b9160ff9548b59ee98872891f0111ea96f0d782d/doc/farsdata-tutorial.html)
 
 4. Does this package have at least one test included in the tests/ directory?
 
