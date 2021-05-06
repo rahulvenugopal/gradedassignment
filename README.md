@@ -1,6 +1,6 @@
 # Learning how to create an R package 📦
 
-[![](https://img.shields.io/travis/com/rahulvenugopal/gradedassignment?style=for-the-badge)](https://travis-ci.com/github/rahulvenugopal/gradedassignment)    [![](https://img.shields.io/github/license/rahulvenugopal/testma?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)	 [![](https://img.shields.io/twitter/follow/rhlvenugopal?color=blue&logo=twitter&style=for-the-badge)](https://twitter.com/rhlvenugopal)
+[![](https://img.shields.io/travis/com/rahulvenugopal/gradedassignment?style=for-the-badge)](https://travis-ci.com/github/rahulvenugopal/gradedassignment)    [![](https://img.shields.io/github/license/rahulvenugopal/Election_2021?color=indianred&style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)	 [![](https://img.shields.io/twitter/follow/rhlvenugopal?color=blue&logo=twitter&style=for-the-badge)](https://twitter.com/rhlvenugopal)  [![](https://img.shields.io/appveyor/build/rahulvenugopal/gradedassignment?color=steelblue&label=Appveyor&style=for-the-badge)](https://ci.appveyor.com/project/rahulvenugopal/gradedassignment)
 
 > Packages are the fundamental units of reproducible R code ~`Hadley Wickham`
 
